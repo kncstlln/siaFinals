@@ -1,7 +1,6 @@
 <html>
     <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <link href="style.css" rel="stylesheet">
     </head>
 </html>
 <?php
@@ -82,7 +81,6 @@ if ($products_in_cart) {
     // echo $subtotal;
 }
 
-
 ?>
 <?php
 $num_items_in_cart = isset($_SESSION['shopping_cart_tbl']) ? count($_SESSION['shopping_cart_tbl']) : 0;
@@ -162,8 +160,7 @@ $num_items_in_cart = isset($_SESSION['shopping_cart_tbl']) ? count($_SESSION['sh
     </form>
         <form action="public/payment.php" method="post">
             <input type="hidden" name="subtotal" value="<?php echo $subtotal;?>">
-            <label for="payment" class="payment"></label>
-            <input id="payment" value="Pay" type="submit"/>
+            <input value="Pay" type="submit"/>
         </form>
         </div>
     </main>

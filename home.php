@@ -24,10 +24,6 @@ $recently_added_products = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </a>
         <?php endforeach; ?>
     </div>
-    <!-- <script async src="https://js.stripe.com/v3/pricing-table.js"></script>
-    <stripe-pricing-table pricing-table-id="prctbl_1N6642L1p7QH1CUF4zvgW1hj"
-    publishable-key="pk_test_51N5oaNL1p7QH1CUF2zaoHU1OSU3rxqna2afVsyzEBz5VTYFxRjM8A5l6yG92e4WSoVFp3uIvplqpE8nx52DgKMEN003WYUTALO">
-    </stripe-pricing-table>
-    </div> -->
+
 
 <?=template_footer()?>

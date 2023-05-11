@@ -1,22 +1,22 @@
 <?php
 include 'shared.php';
 
-
 try {
-  $dollars = "usd";
-
+  $currency = "PHP";
   $paymentIntent = $stripe->paymentIntents->create([
     'automatic_payment_methods' => ['enabled' => true],
-    'amount' => $subtotal = $_POST['subtotal'],
-    'currency' => $dollars,
+    'amount' => $subtotal = $_POST['subtotal'] * 100,
+    'currency' => $currency,
+    'receipt_email' => 'jenny.rosen@example.com'
+
   ]);
 } catch (\Stripe\Exception\ApiErrorException $e) {
   http_response_code(400);
   error_log($e->getError()->message);
 ?>
   <h1>Error</h1>
-  <p>Failed to create a PaymentIntent</p>
-  <p>Please check the server logs for more information</p>
+  <p>Your Payment Intent failed</p>
+  <p>Please try again!</p>
 <?php
   exit;
 } catch (Exception $e) {
@@ -36,16 +36,24 @@ try {
     <script src="https://js.stripe.com/v3/"></script>
     <script src="./utils.js"></script>
     <script>
+      let emailAddress = '';
+
       document.addEventListener('DOMContentLoaded', async () => {
         const stripe = Stripe('<?= $_ENV["STRIPE_PUBLISHABLE_KEY"]; ?>', {
           apiVersion: '2022-11-15',
         });
 
         const elements = stripe.elements({
-          clientSecret: '<?= $paymentIntent->client_secret; ?>'
+          clientSecret: '<?= $paymentIntent->client_secret; ?>', appearance,
         });
+
+        const linkAuthenticationElement = elements.create("linkAuthentication");
+        linkAuthenticationElement.mount("#link-authentication-element");
+
         const paymentElement = elements.create('payment');
         paymentElement.mount('#payment-element');
+
+
 
         const paymentForm = document.querySelector('#payment-form');
         paymentForm.addEventListener('submit', async (e) => {
@@ -73,12 +81,15 @@ try {
       });
     </script>
   </head>
-  <body>
+  <body style="background-color:#1A1F36;">
     <main>
-      <h1>Payment</h1>
+      <h1 style="color: white;"><center>Payment</center></h1>
 
       <form id="payment-form">
-        <label for="payment-element">Payment details</label>
+        <label style="color: white;" for="payment-element">User Credentials</label>
+        <div id="link-authentication-element">
+        <!--Stripe.js injects the Link Authentication Element-->
+      </div>
         <div id="payment-element">
           <!-- Elements will create input elements here -->
         </div>
@@ -86,8 +97,8 @@ try {
         <!-- We'll put the error messages in this element -->
         <div id="payment-errors" role="alert"></div>
           <a href="../index.php?page=cart">Back</a>
-          <button id="submit">Pay</button>
- 
+          <button style="width: 100px; height: 40px;" id="submit">
+            Pay
       </form>
 
       <div id="messages" role="alert" style="display: none;"></div>

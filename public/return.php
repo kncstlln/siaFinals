@@ -12,23 +12,29 @@ $paymentIntent = $stripe->paymentIntents->retrieve(
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>PaymentIntent</title>
-    <link rel="stylesheet" href="css/base.css" />
+    <title>Payment Intent</title>
+    <link rel="stylesheet" href="css/success.css" />
     <script src="https://js.stripe.com/v3/"></script>
   </head>
-  <body>
+  <body style="background-color:#1A1F36;">
     <main>
-      <a href="../index.php?page=cart">back</a>
-      <h1>Payment Status</h1>
 
-      <h3>PaymentIntent</h3>
-      <p><a href="https://dashboard.stripe.com/test/payments/<?= $paymentIntent->id; ?>" target="_blank">Dashboard</a></p>
-      <p>ID <?= $paymentIntent->id; ?></p>
-      <p>Status: <?= $paymentIntent->status; ?></p>
-      <p>Amount: <?= $paymentIntent->amount; ?></p>
-      <p>Currency: <?= $paymentIntent->currency; ?></p>
-      <p>Payment Method: <?= $paymentIntent->payment_method; ?></p>
-      <a href='/'>Check Email</a>
+      <div class="card"> 
+  <div class="header"> 
+    <div class="image">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M20 7L9.00004 18L3.99994 13" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+      </div> 
+      <div class="content">
+         <span class="title">Payment Successful</span> 
+         <p class="message">Thank you for your purchase. Your receipt will be sent to your email address</p> 
+         </div> 
+         <div class="actions">
+            <a href="https://gmail.com/"><button class="history" type="button">Check Email</button></a>
+            <a href="/siaintegration/index.php"><button class="track" type="button">Back</button></a>
+            </div> 
+            </div> 
+            </div>
+            
     </main>
   </body>
 </html>

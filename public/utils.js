@@ -1,3 +1,6 @@
+const stripe = Stripe("pk_test_51N5oaNL1p7QH1CUF2zaoHU1OSU3rxqna2afVsyzEBz5VTYFxRjM8A5l6yG92e4WSoVFp3uIvplqpE8nx52DgKMEN003WYUTALO");
+
+
 // Helper for displaying status messages.
 const addMessage = (message) => {
   const messagesDiv = document.querySelector('#messages');
@@ -15,3 +18,12 @@ const addDashboardLinks = (message) => {
     `<a href="${piDashboardBase}/$1" target="_blank">$1</a>`
   );
 };
+
+
+const appearance = {
+  theme: 'night',
+  labels: 'floating',
+
+};
+
+

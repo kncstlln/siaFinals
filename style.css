@@ -200,9 +200,9 @@ main > .product form input[type="number"] {
 	border-radius: 5px;
 }
 main > .product form input[type="submit"] {
-	background: #4e5c70;
+	background: #687a92;
 	border: 0;
-	color: #FFFFFF;
+	color: #d1cfcf;
 	width: 400px;
 	padding: 12px 0;
 	text-transform: uppercase;
@@ -313,7 +313,7 @@ main .cart .buttons input[type="submit"] {
 	margin-left: 5px;
 	padding: 9px 20px;
 	border: 0;
-	background: #6C757D;
+	background: #434f61;
 	color: #FFFFFF;
 	font-size: 14px;
 	font-weight: bold;
@@ -341,15 +341,4 @@ footer {
 	border-top: 1px solid #EEEEEE;
 	padding: 20px 0;
 	width: 100%;
-}
-
-input[type="submit"] {
-    display: none;
-}
-.payment {
-    border: 1px solid #cccccc;
-    display: inline-block;
-    padding: 6px 12px;
-    cursor: pointer;
-	background-color: green;
 }
