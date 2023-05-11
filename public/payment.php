@@ -1,6 +1,7 @@
 <?php
 include 'shared.php';
 
+echo $_POST['email'];
 try {
   $currency = "PHP";
   $paymentIntent = $stripe->paymentIntents->create([
