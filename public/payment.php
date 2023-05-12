@@ -1,14 +1,12 @@
 <?php
 include 'shared.php';
 
-echo $_POST['email'];
 try {
   $currency = "PHP";
   $paymentIntent = $stripe->paymentIntents->create([
     'automatic_payment_methods' => ['enabled' => true],
     'amount' => $subtotal = $_POST['subtotal'] * 100,
-    'currency' => $currency,
-    'receipt_email' => 'jenny.rosen@example.com'
+    'currency' => $currency
 
   ]);
 } catch (\Stripe\Exception\ApiErrorException $e) {
@@ -32,12 +30,12 @@ try {
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Card</title>
+    <title>Payment</title>
     <link rel="stylesheet" href="css/base.css" />
     <script src="https://js.stripe.com/v3/"></script>
     <script src="./utils.js"></script>
     <script>
-      let emailAddress = '';
+
 
       document.addEventListener('DOMContentLoaded', async () => {
         const stripe = Stripe('<?= $_ENV["STRIPE_PUBLISHABLE_KEY"]; ?>', {
@@ -50,6 +48,11 @@ try {
 
         const linkAuthenticationElement = elements.create("linkAuthentication");
         linkAuthenticationElement.mount("#link-authentication-element");
+
+        const addressElement = elements.create("address", {
+        mode: "shipping",
+        });
+        addressElement.mount("#address-element");
 
         const paymentElement = elements.create('payment');
         paymentElement.mount('#payment-element');
@@ -90,7 +93,10 @@ try {
         <label style="color: white;" for="payment-element">User Credentials</label>
         <div id="link-authentication-element">
         <!--Stripe.js injects the Link Authentication Element-->
-      </div>
+        </div>
+        <div id="address-element">
+        <!-- Elements will create form elements here -->
+        </div>
         <div id="payment-element">
           <!-- Elements will create input elements here -->
         </div>

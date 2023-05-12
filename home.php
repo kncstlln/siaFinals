@@ -19,11 +19,12 @@ $recently_added_products = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <img src="imgs/<?=$product['image_url']?>" width="200" height="200" alt="<?=$product['name']?>">
             <span class="name"><?=$product['name']?></span>
             <span class="price">
-                &dollar;<?=$product['price']?>
+                &#8369;<?=$product['price']?>
             </span>
         </a>
         <?php endforeach; ?>
     </div>
+    
 
 
 <?=template_footer()?>

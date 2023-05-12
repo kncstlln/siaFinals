@@ -30,7 +30,7 @@ if (isset($_GET['id'])) {
     <div>
         <h1 class="name"><?=$product['name']?></h1>
         <span class="price">
-            &dollar;<?=$product['price']?>
+                &#8369;<?=$product['price']?>
  
         </span>
         <form action="index.php?page=cart" method="post">

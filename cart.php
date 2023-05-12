@@ -9,7 +9,7 @@ if (isset($_POST['product_id'], $_POST['quantity']) && is_numeric($_POST['produc
     // Set the post variables so we easily identify them, also make sure they are integer
     $product_id = (int)$_POST['product_id'];
     $quantity = (int)$_POST['quantity'];
-    // Prepare the SQL statement, we basically are checking if the product exists in our databaser
+    // Prepare the SQL statement, we basically are checking if the product exists in our database
     $stmt = $pdo->prepare('SELECT * FROM products_tbl WHERE id = ?');
     $stmt->execute([$_POST['product_id']]);
     // Fetch the product from the database and return the result as an Array
@@ -90,7 +90,7 @@ $num_items_in_cart = isset($_SESSION['shopping_cart_tbl']) ? count($_SESSION['sh
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title>$title</title>
+		<title>Shopping Cart</title>
 		<link href="style.css" rel="stylesheet" type="text/css">
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
 	</head>
