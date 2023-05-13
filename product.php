@@ -29,7 +29,7 @@ if (isset($_GET['id'])) {
     <img src="imgs/<?=$product['image_url']?>" width="500" height="500" alt="<?=$product['name']?>">
     <div>
         <h1 class="name"><?=$product['name']?></h1>
-        <span class="price">
+        <span class="price" name='price'>
                 &#8369;<?=$product['price']?>
  
         </span>

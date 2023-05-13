@@ -68,7 +68,8 @@ a {
 }
 
 #payment-form {
-  border: #F6F9FC solid 1px;
+  border: #0f121f solid 1px;
+  border-width: 2px;
   border-radius: var(--radius);
   padding: 20px;
   margin: 20px 0;
@@ -84,12 +85,4 @@ a {
   margin: 20px 0;
   border-radius: var(--radius);
   font-size:0.7em;
-}
-div{
-  white-space:no-wrap;
-}
-
-div button{
-  display:inline-block;
-  white-space:normal;    
 }

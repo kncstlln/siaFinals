@@ -6,7 +6,12 @@ try {
   $paymentIntent = $stripe->paymentIntents->create([
     'automatic_payment_methods' => ['enabled' => true],
     'amount' => $subtotal = $_POST['subtotal'] * 100,
-    'currency' => $currency
+    'currency' => $currency,
+    'metadata'=> [
+      'order_id' => 'Order ID #231789348SIA',
+      'product_name1' => 'Airpods',
+      'product_name2' => 'Smart Watch'
+    ],
 
   ]);
 } catch (\Stripe\Exception\ApiErrorException $e) {
@@ -103,9 +108,10 @@ try {
 
         <!-- We'll put the error messages in this element -->
         <div id="payment-errors" role="alert"></div>
-          <a href="../index.php?page=cart">Back</a>
-          <button style="width: 100px; height: 40px;" id="submit">
+          <button id="submit" style="width: 437px;" >
             Pay
+          </button>
+          <center><a href="../index.php?page=cart">Back</a></center>
       </form>
 
       <div id="messages" role="alert" style="display: none;"></div>

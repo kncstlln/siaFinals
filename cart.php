@@ -4,11 +4,12 @@
     </head>
 </html>
 <?php
+
 // If the user clicked the add to cart button on the product page we can check for the form data
 if (isset($_POST['product_id'], $_POST['quantity']) && is_numeric($_POST['product_id']) && is_numeric($_POST['quantity'])) {
-    // Set the post variables so we easily identify them, also make sure they are integer
-    $product_id = (int)$_POST['product_id'];
-    $quantity = (int)$_POST['quantity'];
+    
+    $product_id = (float)$_POST['product_id'];
+    $quantity = (float)$_POST['quantity'];
     // Prepare the SQL statement, we basically are checking if the product exists in our database
     $stmt = $pdo->prepare('SELECT * FROM products_tbl WHERE id = ?');
     $stmt->execute([$_POST['product_id']]);
@@ -29,6 +30,7 @@ if (isset($_POST['product_id'], $_POST['quantity']) && is_numeric($_POST['produc
             // There are no products in cart, this will add the first product to cart
             $_SESSION['shopping_cart_tbl'] = array($product_id => $quantity);
         }
+
     }
     // Prevent form resubmission...
     header('location: index.php?page=cart');
@@ -140,11 +142,11 @@ $num_items_in_cart = isset($_SESSION['shopping_cart_tbl']) ? count($_SESSION['sh
                         <br>
                         <a href="index.php?page=cart&remove=<?=$product['id']?>" class="remove">Remove</a>
                     </td>
-                    <td class="price">&dollar;<?=$product['price']?></td>
+                    <td class="price">&#x20B1;<?=$product['price']?></td>
                     <td class="quantity">
                         <input type="number" name="quantity-<?=$product['id']?>" value="<?=$products_in_cart[$product['id']]?>" min="1" max="<?=$product['quantity']?>" placeholder="Quantity" required>
                     </td>
-                    <td class="price">&dollar;<?=$product['price'] * $products_in_cart[$product['id']]?></td>
+                    <td class="price">&#x20B1;<?=$product['price'] * $products_in_cart[$product['id']]?></td>
                 </tr>
                 <?php endforeach; ?>
                 <?php endif; ?>
@@ -152,7 +154,7 @@ $num_items_in_cart = isset($_SESSION['shopping_cart_tbl']) ? count($_SESSION['sh
         </table>
         <div class="subtotal">
             <span class="text">Subtotal</span>
-            <span class="price">&dollar;<?=$subtotal?></span>
+            <span class="price">&#x20B1;<?=$subtotal?></span>
         </div>
         <div class="buttons">
             <input type="submit" value="Update" name="update">
@@ -160,7 +162,7 @@ $num_items_in_cart = isset($_SESSION['shopping_cart_tbl']) ? count($_SESSION['sh
     </form>
         <form action="public/payment.php" method="post">
             <input type="hidden" name="subtotal" value="<?php echo $subtotal;?>">
-            <input value="Pay" type="submit"/>
+            <input value="Checkout" type="submit"/>
         </form>
         </div>
     </main>
