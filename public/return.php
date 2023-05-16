@@ -5,7 +5,13 @@ require_once 'shared.php';
 $paymentIntent = $stripe->paymentIntents->retrieve(
    $_GET['payment_intent'],
 );
+
+$myJSON = json_encode($paymentIntent);
+
+
 ?>
+
+
 
 <!DOCTYPE html>
 <html>
@@ -26,8 +32,8 @@ $paymentIntent = $stripe->paymentIntents->retrieve(
       </div> 
       <div class="content">
          <span class="title">Payment Successful</span> 
-         <p class="message">Thank you for your purchase. Your receipt will be sent to your email address</p> 
-         </div> 
+         <p class="message"><?= $myJSON?>;</p> 
+      </div> 
          <div class="actions">
             <a href="https://gmail.com/"><button class="history" type="button">Check Email</button></a>
             <a href="/siaintegration/index.php"><button class="track" type="button">Back</button></a>

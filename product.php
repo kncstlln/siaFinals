@@ -23,6 +23,9 @@ if (isset($_GET['id'])) {
     exit('Product does not exist!');
 }
 ?>
+<style>
+    
+</style>
 <?=template_header('Product')?>
 
 <div class="product content-wrapper">
@@ -36,7 +39,7 @@ if (isset($_GET['id'])) {
         <form action="index.php?page=cart" method="post">
             <input type="number" name="quantity" value="1" min="1" max="<?=$product['quantity']?>" placeholder="Quantity" required>
             <input type="hidden" name="product_id" value="<?=$product['id']?>">
-            <input type="submit" value="Add To Cart">
+            <input type="submit" value="Add To Cart" style="color:white">
         </form>
         <div class="description">
             <?=$product['description']?>

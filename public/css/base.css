@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Raleway&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&family=Share+Tech&display=swap');
 
 :root {
   --light-grey: #F6F9FC;
@@ -9,7 +9,7 @@
 
 body {
   padding: 20px;
-  font-family: 'Raleway';
+  font-family: 'Roboto, sans-serif';
   display: flex;
   justify-content: center;
   font-size: 1.2em;

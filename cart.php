@@ -87,11 +87,85 @@ if ($products_in_cart) {
 <?php
 $num_items_in_cart = isset($_SESSION['shopping_cart_tbl']) ? count($_SESSION['shopping_cart_tbl']) : 0;
 ?>
+<style>
+    /* Reset Styles */
 
+{
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+}
+/* Body Styles */
+body {
+font-family: "Helvetica Neue", sans-serif;
+font-size: 16px;
+line-height: 1.5;
+color: #333;
+}
+
+/* Header Styles */
+header {
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 10px;
+background-color: #fff;
+box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Navigation Styles */
+nav {
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+nav ul {
+display: flex;
+list-style: none;
+}
+
+nav ul li {
+margin-left: 20px;
+}
+
+nav ul li a {
+text-decoration: none;
+color: #333;
+transition: color 0.3s ease;
+}
+
+nav ul li a:hover {
+color: #007aff;
+}
+    /* Footer Styles */
+    footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    footer p {
+    font-size: 0.8rem;
+    }
+    #checkout {
+        background-color: #15660e;
+        width: 100%;
+        padding-right:50%;
+}
+  #checkout:hover {
+        background-color: #0d4d0b;
+}
+</style>
 <!DOCTYPE html>
 <html>
 	<head>
 		<meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>Shopping Cart</title>
 		<link href="style.css" rel="stylesheet" type="text/css">
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
@@ -99,10 +173,10 @@ $num_items_in_cart = isset($_SESSION['shopping_cart_tbl']) ? count($_SESSION['sh
 	<body>
         <header>
             <div class="content-wrapper">
-                <h1>Interstellar</h1>
+                <h1 style="font-weight: bold;">Interstellar</h1>
                 <nav>
-                    <a href="index.php">Home</a>
-                    <a href="index.php?page=products">Products</a>
+                    <a href="index.php" style="color: #555555">Home</a>
+                    <a href="index.php?page=products" style="color: #555555">Products</a>
                 </nav>
                 <div class="link-icons">
                     <a href="index.php?page=cart">
@@ -113,15 +187,16 @@ $num_items_in_cart = isset($_SESSION['shopping_cart_tbl']) ? count($_SESSION['sh
         </header>
 <main>
 <div class="cart content-wrapper">
-    <h1>Shopping Cart</h1>
+    <h1 style="font-size:40px;">Shopping Cart</h1>
     <form action="index.php?page=cart" method="post">
         <table>
+        <div class="buttons"><input type="submit" value="Update" name="update"></div>
             <thead>
                 <tr>
                     <td colspan="2">Product</td>
                     <td>Price</td>
                     <td>Quantity</td>
-                    <td>Total</td>
+                    <td>Subtotal</td>
                 </tr>
             </thead>
             <tbody>
@@ -140,7 +215,7 @@ $num_items_in_cart = isset($_SESSION['shopping_cart_tbl']) ? count($_SESSION['sh
                     <td>
                         <a href="index.php?page=product&id=<?=$product['id']?>"><?=$product['name']?></a>
                         <br>
-                        <a href="index.php?page=cart&remove=<?=$product['id']?>" class="remove">Remove</a>
+                        <a href="index.php?page=cart&remove=<?=$product['id']?>" class="remove" style="color:red">Remove</a>
                     </td>
                     <td class="price">&#x20B1;<?=$product['price']?></td>
                     <td class="quantity">
@@ -153,16 +228,16 @@ $num_items_in_cart = isset($_SESSION['shopping_cart_tbl']) ? count($_SESSION['sh
             </tbody>
         </table>
         <div class="subtotal">
-            <span class="text">Subtotal</span>
+            <span class="text">Total:</span>
             <span class="price">&#x20B1;<?=$subtotal?></span>
         </div>
-        <div class="buttons">
-            <input type="submit" value="Update" name="update">
-        </div>
+
     </form>
         <form action="public/payment.php" method="post">
             <input type="hidden" name="subtotal" value="<?php echo $subtotal;?>">
-            <input value="Checkout" type="submit"/>
+            <div class="buttons">
+            <input class="buttons" id="checkout" type="submit" value="Checkout"/>
+            </div>
         </form>
         </div>
     </main>
