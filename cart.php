@@ -1,9 +1,5 @@
-<html>
-    <head>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    </head>
-</html>
 <?php
+
 
 // If the user clicked the add to cart button on the product page we can check for the form data
 if (isset($_POST['product_id'], $_POST['quantity']) && is_numeric($_POST['product_id']) && is_numeric($_POST['quantity'])) {
@@ -17,6 +13,10 @@ if (isset($_POST['product_id'], $_POST['quantity']) && is_numeric($_POST['produc
     $product = $stmt->fetch(PDO::FETCH_ASSOC);
     // Check if the product exists (array is not empty)
     if ($product && $quantity > 0) {
+        $total_price = $product['price'] * $quantity;
+
+        $stmt = $pdo->prepare('INSERT INTO shopping_cart_tbl (quantity, total_price) VALUES (?, ?)');
+        $stmt->execute([$quantity, $total_price]);
         // Product exists in database, now we can create/update the session variable for the cart
         if (isset($_SESSION['shopping_cart_tbl']) && is_array($_SESSION['shopping_cart_tbl'])) {
             if (array_key_exists($product_id, $_SESSION['shopping_cart_tbl'])) {
@@ -54,6 +54,20 @@ if (isset($_POST['update']) && isset($_SESSION['shopping_cart_tbl'])) {
             if (is_numeric($id) && isset($_SESSION['shopping_cart_tbl'][$id]) && $quantity > 0) {
                 // Update new quantity
                 $_SESSION['shopping_cart_tbl'][$id] = $quantity;
+                $stmt = $pdo->prepare('SELECT * FROM products_tbl WHERE id = ?');
+                $stmt->execute([$id]);
+                $product = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                // Calculate the new total price
+                $total_price = $product['price'] * $quantity;
+
+                // Update the total_price in the shopping_cart table
+                $stmt = $pdo->prepare('UPDATE shopping_cart_tbl SET total_price = ? WHERE id = ?');
+                $stmt->execute([$total_price, $id]);
+
+                // Update the modified_at column in the shopping_cart table
+                $stmt = $pdo->prepare('UPDATE shopping_cart_tbl SET modified_at = CURRENT_TIMESTAMP WHERE id = ?');
+                $stmt->execute([$id]);
             }
         }
     }
@@ -159,6 +173,35 @@ color: #007aff;
   #checkout:hover {
         background-color: #0d4d0b;
 }
+.overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            max-width: 500px;
+            width: 100%;
+        }
+
+        .close-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 20px;
+            color: #555;
+            cursor: pointer;
+        }
 </style>
 <!DOCTYPE html>
 <html>
@@ -167,6 +210,7 @@ color: #007aff;
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>Shopping Cart</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 		<link href="style.css" rel="stylesheet" type="text/css">
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
 	</head>
@@ -233,13 +277,14 @@ color: #007aff;
         </div>
 
     </form>
-        <form action="public/payment.php" method="post">
+        <form action="public/payment.php"method="post">
             <input type="hidden" name="subtotal" value="<?php echo $subtotal;?>">
             <div class="buttons">
             <input class="buttons" id="checkout" type="submit" value="Checkout"/>
             </div>
         </form>
         </div>
+        
     </main>
         <footer>
             <div class="content-wrapper">

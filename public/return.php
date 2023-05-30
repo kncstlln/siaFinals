@@ -7,8 +7,7 @@ $paymentIntent = $stripe->paymentIntents->retrieve(
 );
 
 $myJSON = json_encode($paymentIntent);
-
-
+var_dump($myJSON); 
 ?>
 
 

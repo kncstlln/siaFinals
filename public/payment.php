@@ -78,7 +78,7 @@ try {
           const {error} = await stripe.confirmPayment({
             elements,
             confirmParams: {
-              return_url: `${window.location.origin}/siaintegration/public/return.php`
+              return_url: `${window.location.origin}/public/return.php`
             }
           });
           if(error) {
