@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 11, 2023 at 06:42 PM
+-- Generation Time: May 30, 2023 at 06:22 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -48,8 +48,8 @@ CREATE TABLE `order_details_tbl` (
   `order_id` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
   `price` decimal(10,2) NOT NULL,
-  `created_at` datetime NOT NULL,
-  `modified_at` datetime NOT NULL
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `modified_at` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -90,8 +90,8 @@ CREATE TABLE `products_tbl` (
 --
 
 INSERT INTO `products_tbl` (`id`, `name`, `description`, `quantity`, `price`, `image_url`, `created_at`, `modified_at`) VALUES
-(2, 'Smart Watch', '\r\nDiscover the ultimate Smart Watch – stylish, functional, and connected. Stay updated, track fitness goals, and enjoy voice control. Embrace the future of wearables today!', 99999999, '159.53', 'smart.jpg', '2023-05-09 12:33:29', '2023-05-09 12:33:29'),
-(3, 'Airpods', 'Immerse yourself in superior sound quality with our cutting-edge headphones. Experience wireless freedom, noise cancellation, and sleek design. Elevate your audio experience today!', 99999999, '260.46', 'headphones.jpg', '2023-05-09 12:35:03', '2023-05-09 12:35:03');
+(2, 'Smart Watch', '\r\nDiscover the ultimate Smart Watch – stylish, functional, and connected. Stay updated, track fitness goals, and enjoy voice control. Embrace the future of wearables today!', 99999999, '2990.00', 'smart.jpg', '2023-05-09 12:33:29', '2023-05-09 12:33:29'),
+(3, 'Airpods', 'Immerse yourself in superior sound quality with our cutting-edge headphones. Experience wireless freedom, noise cancellation, and sleek design. Elevate your audio experience today!', 99999999, '3495.25', 'headphones.jpg', '2023-05-09 12:35:03', '2023-05-09 12:35:03');
 
 -- --------------------------------------------------------
 
@@ -101,12 +101,25 @@ INSERT INTO `products_tbl` (`id`, `name`, `description`, `quantity`, `price`, `i
 
 CREATE TABLE `shopping_cart_tbl` (
   `id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
   `total_price` decimal(10,2) NOT NULL,
-  `created_at` datetime NOT NULL,
-  `modified_at` datetime NOT NULL
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `modified_at` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `shopping_cart_tbl`
+--
+
+INSERT INTO `shopping_cart_tbl` (`id`, `quantity`, `total_price`, `created_at`, `modified_at`) VALUES
+(17, 2, '5980.00', '2023-05-29 18:04:07', '2023-05-29 18:04:07'),
+(18, 1, '3495.25', '2023-05-29 18:18:38', '2023-05-29 18:18:38'),
+(19, 1, '3495.25', '2023-05-29 18:24:54', '2023-05-29 18:24:54'),
+(20, 1, '3495.25', '2023-05-29 18:26:34', '2023-05-29 18:26:34'),
+(21, 3, '8970.00', '2023-05-29 18:29:21', '2023-05-29 18:29:21'),
+(22, 1, '2990.00', '2023-05-29 18:32:34', '2023-05-29 18:32:34'),
+(23, 1, '3495.25', '2023-05-30 12:03:41', '2023-05-30 12:03:41'),
+(24, 1, '2990.00', '2023-05-30 12:04:51', '2023-05-30 12:04:51');
 
 -- --------------------------------------------------------
 
@@ -179,8 +192,7 @@ ALTER TABLE `products_tbl`
 -- Indexes for table `shopping_cart_tbl`
 --
 ALTER TABLE `shopping_cart_tbl`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `user_id` (`user_id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `user_details_tbl`
@@ -229,7 +241,7 @@ ALTER TABLE `products_tbl`
 -- AUTO_INCREMENT for table `shopping_cart_tbl`
 --
 ALTER TABLE `shopping_cart_tbl`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `user_details_tbl`
@@ -264,18 +276,6 @@ ALTER TABLE `order_details_tbl`
 --
 ALTER TABLE `payment_info_tbl`
   ADD CONSTRAINT `payment_info_tbl_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
-
---
--- Constraints for table `shopping_cart_tbl`
---
-ALTER TABLE `shopping_cart_tbl`
-  ADD CONSTRAINT `shopping_cart_tbl_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
-
---
--- Constraints for table `user_details_tbl`
---
-ALTER TABLE `user_details_tbl`
-  ADD CONSTRAINT `user_details_tbl_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user_login_tbl` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
