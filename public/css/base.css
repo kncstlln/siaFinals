@@ -68,8 +68,7 @@ a {
 }
 
 #payment-form {
-  border: #0f121f solid 1px;
-  border-width: 2px;
+  border: #ffffff solid 2px;
   border-radius: var(--radius);
   padding: 20px;
   margin: 20px 0;

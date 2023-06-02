@@ -3,12 +3,40 @@ const stripe = Stripe("pk_test_51N5oaNL1p7QH1CUF2zaoHU1OSU3rxqna2afVsyzEBz5VTYFx
 
 // Helper for displaying status messages.
 const addMessage = (message) => {
+  // Get the messages div
   const messagesDiv = document.querySelector('#messages');
+
+  // Check if there is already an error message
+  if (messagesDiv.innerHTML.length > 0) {
+    // Remove the last error message
+    messagesDiv.innerHTML = messagesDiv.innerHTML.slice(0, -1);
+  }
+
+  // Add the new error message
+  messagesDiv.innerHTML += `> ${message}<br>`;
+
+  // Display the messages div
   messagesDiv.style.display = 'block';
-  const messageWithLinks = addDashboardLinks(message);
-  messagesDiv.innerHTML += `> ${messageWithLinks}<br>`;
+
+  // Log the message to the console
   console.log(`Debug: ${message}`);
 };
+
+
+if(error) {
+  // Check if there is already an error message
+  if (messagesDiv.innerHTML.length > 0) {
+    // Remove the last error message
+    messagesDiv.innerHTML = messagesDiv.innerHTML.slice(0, -1);
+  }
+
+  // Add the new error message
+  addMessage(error.message);
+
+  // Re-enable the form so the customer can resubmit.
+  paymentForm.querySelector('button').disabled = false;
+  return;
+}
 
 // Adds links for known Stripe objects to the Stripe dashboard.
 const addDashboardLinks = (message) => {

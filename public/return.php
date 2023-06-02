@@ -7,7 +7,6 @@ $paymentIntent = $stripe->paymentIntents->retrieve(
 );
 
 $myJSON = json_encode($paymentIntent);
-var_dump($myJSON); 
 ?>
 
 
@@ -31,12 +30,36 @@ var_dump($myJSON);
       </div> 
       <div class="content">
          <span class="title">Payment Successful</span> 
-         <p class="message"><?= $myJSON?>;</p> 
+         <p class="message">Check your email for your order details.</p> 
       </div> 
          <div class="actions">
             <a href="https://gmail.com/"><button class="history" type="button">Check Email</button></a>
-            <a href="/siaintegration/index.php"><button class="track" type="button">Back</button></a>
-            </div> 
+            <?php
+            // Check if the payment was successful
+            if ($paymentIntent->status === 'succeeded') {
+                  
+               // Check if the shopping cart session variable is defined
+              if (isset($_SESSION['shopping_cart_tbl'])) {
+
+                  // Remove all products from the cart
+                  unset($_SESSION['shopping_cart_tbl']);
+
+                  // Redirect the user to the home page
+                  header('Location: /siaintegration/index.php');
+              } else {
+
+                  // The shopping cart session variable is not defined
+                  echo 'The shopping cart is empty.';
+              }
+
+    
+                // Redirect the user to the home page
+                echo '<a href="/siaintegration/index.php"><button class="track" type="button">Back</button></a>';
+            } else {
+                echo '<a href="/siaintegration/index.php"><button class="track" type="button">Back</button></a>';
+            }
+            ?>
+        </div> 
             </div> 
             </div>
             
